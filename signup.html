@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,500&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/all.min.css">
+  </head>
+
+  <body>
+    <div class="scrolling-up"></div>
+    <!--navbar-->
+    <header>
+      <a href="" class="logo"><i class="fa-solid fa-shirt"></i>adidas</a>
+      <!-- <ul class="navbar">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="new.html">New Arrival</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="reviews.html">Reviews</a></li>
+      </ul> -->
+      <!--icons-->
+      <div class="header-icons">
+        <!-- <i class="fa-solid fa-bars" id="meue-icon"></i>
+        <i class="fa-solid fa-magnifying-glass" id="search-icon"></i>
+        <i class="fa-solid fa-cart-shopping" id="cart-icon"></i> -->
+        <a href="signin.html"><i class="fa-solid fa-user" id="user-icon"></i></a>
+      </div>
+      <!--search-box-->
+      <div class="search-box">
+        <input  type="search" id="find" placeholder="Search Here.. " />
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      </div>
+      <!--cart-box-->
+      <div class="cart">
+        <h2 class="card-title">your cart</h2>
+        <div class="cart-content"></div>
+
+        <div class="total">
+          <div class="total-head">total</div>
+          <div class="total-price">0$</div>
+        </div>
+        <button type="button" class="buy-btn">Buy Now</button>
+        <i class="fa-solid fa-xmark" id="cart-close"></i>
+      </div>
+    </header>
+    <div class="signup-container">
+      <form action="">
+        <h2>Create Account</h2>
+        <div class="username input-box">
+          <input type="text" placeholder="Username" id='user'>
+          <i class="fa-solid fa-circle-check right"></i>
+          <i class="fa-solid fa-circle-xmark wrong"></i>
+          <span class="error"></span>
+        </div>
+        <div class="email input-box">
+          <input type="email" name="email" id="mail" placeholder="Email">
+          <i class="fa-solid fa-circle-check right"></i>
+          <i class="fa-solid fa-circle-xmark wrong"></i>
+          <span class="error"></span>
+        </div>
+        <div class="password input-box">
+          <input type="password" placeholder="Password" id='pass'>
+          <i class="fa-solid fa-circle-check right"></i>
+          <i class="fa-solid fa-circle-xmark wrong"></i>
+          <span class="error"></span>
+        </div>
+        <div class="password-confirm input-box">
+          <input type="password" placeholder="Confirm Password" id='pass2'>
+          <i class="fa-solid fa-circle-check right"></i>
+          <i class="fa-solid fa-circle-xmark wrong"></i>
+          <span class="error"></span>
+        </div>
+        <input type="submit" value="Sign Up" class="signup">
+      </form>
+    </div>
+    <script src="js/main.js"></script>
+    <script>
+      let signBtn = document.querySelector(".signup");
+      let username = document.getElementById("user");
+      let email = document.getElementById("mail");
+      let password = document.getElementById("pass");
+      let password2 = document.getElementById("pass2");
+      let rightCheck = 0;
+      let accountNum = localStorage.getItem("accountNum") || 0;
+
+      signBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        checkInputs();
+        if (rightCheck === 4) {
+          localStorage.setItem(
+            `account${accountNum}`,
+            `${email.value.trim()} ${password.value}`
+          );
+          localStorage.setItem("accountNum", ++accountNum);
+          setTimeout(() => {
+            window.location = "signin.html";
+          }, 250);
+        }
+      });
+
+      function checkInputs() {
+        rightCheck = 0;
+        let userValue = username.value.trim();
+        let emailValue = email.value.trim();
+        let passValue = password.value;
+        let pass2Value = password2.value;
+
+        if (!userValue) {
+          setError(username, "This Field Cannot Be Empty");
+        } else {
+          setSuccess(username);
+          rightCheck++;
+        }
+
+        if (!emailValue) {
+          setError(email, "This Field Cannot Be Empty");
+        } else if (!mailMatched(emailValue)) {
+          setError(email, "Please Enter Valid Email Address");
+        } else {
+          setSuccess(email);
+          rightCheck++;
+        }
+
+        if (!passValue) {
+          setError(password, "This Field Cannot Be Empty");
+        } else if (!passMatched(passValue)) {
+          setError(password, "Enter Strong Password Like (Hhhh@1230) 6~30");
+        } else {
+          setSuccess(password);
+          rightCheck++;
+        }
+
+        if (!pass2Value) {
+          setError(password2, "This Field Cannot Be Empty");
+        } else if (pass2Value !== passValue) {
+          setError(password2, "Passwords Not Matched");
+        } else {
+          setSuccess(password2);
+          rightCheck++;
+        }
+      }
+
+      function setError(input, msg) {
+        let inputBox = input.parentNode;
+        let errorMsg = inputBox.children[3];
+
+        inputBox.className = "input-box add-margin failed";
+        errorMsg.textContent = msg;
+      }
+
+      function setSuccess(input) {
+        let inputBox = input.parentNode;
+        inputBox.className = "input-box success";
+      }
+
+      function mailMatched(email) {
+        return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+          email
+        );
+      }
+
+      function passMatched(password) {
+        return /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,30}$/.test(
+          password
+        );
+      }
+
+    </script>
+  </body>
+
+</html>
