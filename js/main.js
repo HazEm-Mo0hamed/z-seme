@@ -225,7 +225,7 @@ if (location.pathname === "/search.html") {
 //slider
 
 let currentSlide = 1;
-let shownProducts = 5;
+let shownProducts = 4;
 let products = document.querySelectorAll(".Product-box");
 let range = products.length / shownProducts;
 range =
