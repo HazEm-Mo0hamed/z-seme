@@ -168,7 +168,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-image: url(/imgs/young-handsome-guy-has-break-from-training-stadium-morning-he-wears-sport-clothes-listening-music-through-headphones-drinking-red-drink-from-bottle.jpg);
+  background-image: url("/imgs/young-handsome-guy-has-break-from-training-stadium-morning-he-wears-sport-clothes-listening-music-through-headphones-drinking-red-drink-from-bottle.jpg");
   background-position: center center   ;
   background-repeat: no-repeat;
   background-size: cover;
